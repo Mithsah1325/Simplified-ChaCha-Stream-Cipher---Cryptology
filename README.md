@@ -25,23 +25,6 @@ The bundled `main()` in `chacha.py` prints:
 - Encryption/decryption of two messages (long and short) with success checks.
 - Keystream consistency check (same key+nonce+counter gives identical ciphertext for the same plaintext).
 
-## How the cipher works (summary)
-ChaCha uses a 4x4 matrix of 32-bit words. Each 64-byte block is produced by applying 20 rounds (10 double rounds) of mixing, then adding the original state and outputting little-endian words.
-
-Quarter round (operates on words a, b, c, d):
-$$
-\begin{aligned}
-a &= (a + b) \bmod 2^{32};\\
-d &= (d \oplus a) \lll 16;\\
-c &= (c + d) \bmod 2^{32};\\
-b &= (b \oplus c) \lll 12;\\
-a &= (a + b) \bmod 2^{32};\\
-d &= (d \oplus a) \lll 8;\\
-c &= (c + d) \bmod 2^{32};\\
-b &= (b \oplus c) \lll 7.
-\end{aligned}
-$$
-
 Double round structure:
 - Column rounds on words (0,4,8,12), (1,5,9,13), (2,6,10,14), (3,7,11,15).
 - Diagonal rounds on words (0,5,10,15), (1,6,11,12), (2,7,8,13), (3,4,9,14).
